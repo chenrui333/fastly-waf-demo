@@ -1,0 +1,6 @@
+# terraform plugin
+.terraform/
+*.out
+
+# generated code
+generated/
