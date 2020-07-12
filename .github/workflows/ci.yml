@@ -1,0 +1,32 @@
+name: ci
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+env:
+  FASTLY_API_KEY: ${{ secrets.FASTLY_API_KEY }}
+
+jobs:
+  terraform:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: 0.12.28
+
+      - name: Run terraform init
+        run: terraform init -input=false -no-color
+
+      - name: Run terraform plan
+        run: terraform plan -input=false -refresh -no-color
+
+      - name: Run terraform apply
+        if: github.ref == 'refs/heads/master'
+        run: terraform apply -no-color -auto-approve
