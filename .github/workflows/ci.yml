@@ -25,6 +25,14 @@ jobs:
         id: init
         run: terraform init -input=false -no-color
 
+      # prevent race condition between the runs
+      - name: Wait for Previous Deployment
+        if: github.ref == 'refs/heads/master'
+        uses: softprops/turnstyle@master
+        timeout-minutes: 10
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Run terraform plan
         id: plan
         run: terraform plan -input=false -refresh -no-color
