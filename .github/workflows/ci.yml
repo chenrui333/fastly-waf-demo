@@ -47,11 +47,11 @@ jobs:
         run: |
           git config --global user.email "chenrui333@gmail.com"
           git config --global user.name "chenrui333"
-          changed=$(git diff --name-only --diff-filter=ACMRT terraform.tfstate)
+          changed=$(git diff --name-only --diff-filter=ACMRT terraform.tfstate*)
           if [[ -n "$changed" ]]; then
             echo "Committing tfstate change"
             git diff
-            git add conf
-            git commit -m 'Update tfstate'
+            git add terraform.tfstate*
+            git commit -m 'Update tfstate files'
             git push origin master
           fi
