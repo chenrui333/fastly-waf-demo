@@ -1,10 +1,8 @@
 resource "fastly_service_v1" "fastly_waf_demo" {
   name = "fastly_waf_test"
-  version_comment = "Deploying WAF - ZD #343062 - MS"
 
   domain {
     name    = "chenrui.dev"
-    comment = "test domain"
   }
 
   backend {
@@ -31,7 +29,7 @@ resource "fastly_service_v1" "fastly_waf_demo" {
     type      = "PREFETCH"
   }
 
-  # # dynamicsnippet id, `7T4A83Dq4ZVzpzGlS478vx`
+  # dynamicsnippet id, `7T4A83Dq4ZVzpzGlS478vx`
   dynamicsnippet {
     name     = "Fastly_WAF_Snippet"
     priority = 10
