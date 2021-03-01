@@ -23,6 +23,28 @@ resource "fastly_service_v1" "fastly_waf_demo" {
     weight                = 100
   }
 
+  condition {
+    name      = "WAF_Prefetch"
+    priority  = 10
+    statement = "req.backend.is_origin && !req.http.rqpass"
+    type      = "PREFETCH"
+  }
+
+  # # dynamicsnippet id, `7T4A83Dq4ZVzpzGlS478vx`
+  dynamicsnippet {
+    name     = "Fastly_WAF_Snippet"
+    priority = 10
+    type     = "recv"
+  }
+
+  response_object {
+    content      = "403 Forbidden"
+    content_type = "text/plain"
+    name         = "WAF_Response"
+    response     = "Forbidden"
+    status       = 403
+  }
+
   vcl {
     name    = "main.vcl"
     content = file("${path.module}/vcl/main.vcl")
@@ -39,4 +61,8 @@ resource "fastly_service_v1" "fastly_waf_demo" {
     content = file("${path.module}/vcl/fastly-boilerplate-end.vcl")
   }
 
+  waf {
+    prefetch_condition = "WAF_Prefetch"
+    response_object    = "WAF_Response"
+  }
 }
