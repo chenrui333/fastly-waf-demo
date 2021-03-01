@@ -1,5 +1,6 @@
 resource "fastly_service_v1" "fastly_waf_demo" {
   name = "fastly_waf_test"
+  version_comment = "Deploying WAF - ZD #343062 - MS"
 
   domain {
     name    = "chenrui.dev"
