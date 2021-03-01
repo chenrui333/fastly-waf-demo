@@ -1,5 +1,5 @@
 resource "fastly_service_waf_configuration" "waf" {
-  waf_id                         = fastly_service_v1.fastlywaf.waf[0].waf_id
+  waf_id                         = fastly_service_v1.fastly_waf_demo.waf[0].waf_id
   http_violation_score_threshold = 5
 
   rule {
