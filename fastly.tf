@@ -2,7 +2,7 @@ resource "fastly_service_v1" "fastly_waf_demo" {
   name = "fastly_waf_test"
 
   domain {
-    name    = "chenrui.dev"
+    name = "chenrui.dev"
   }
 
   backend {
